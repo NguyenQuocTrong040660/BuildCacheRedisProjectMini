@@ -1,0 +1,6 @@
+@BuildCacheRedisProjectMini_HostAddress = http://localhost:5153
+
+GET {{BuildCacheRedisProjectMini_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

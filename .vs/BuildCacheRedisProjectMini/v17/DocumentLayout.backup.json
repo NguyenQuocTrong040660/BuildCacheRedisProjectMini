@@ -1,0 +1,81 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\3.MyPrivate\\BuildCacheRedisProjectMini\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{62B2B81C-F8DA-416C-B087-7EA95C198AEC}|BuildCacheRedisProjectMini.csproj|d:\\3.myprivate\\buildcacheredisprojectmini\\services\\irediscacheservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62B2B81C-F8DA-416C-B087-7EA95C198AEC}|BuildCacheRedisProjectMini.csproj|solutionrelative:services\\irediscacheservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62B2B81C-F8DA-416C-B087-7EA95C198AEC}|BuildCacheRedisProjectMini.csproj|d:\\3.myprivate\\buildcacheredisprojectmini\\services\\rediscacheservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62B2B81C-F8DA-416C-B087-7EA95C198AEC}|BuildCacheRedisProjectMini.csproj|solutionrelative:services\\rediscacheservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IRedisCacheService.cs",
+              "DocumentMoniker": "D:\\3.MyPrivate\\BuildCacheRedisProjectMini\\Services\\IRedisCacheService.cs",
+              "RelativeDocumentMoniker": "Services\\IRedisCacheService.cs",
+              "ToolTip": "D:\\3.MyPrivate\\BuildCacheRedisProjectMini\\Services\\IRedisCacheService.cs",
+              "RelativeToolTip": "Services\\IRedisCacheService.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAA/wBIAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-10T01:36:53.404Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RedisCacheService .cs",
+              "DocumentMoniker": "D:\\3.MyPrivate\\BuildCacheRedisProjectMini\\Services\\RedisCacheService .cs",
+              "RelativeDocumentMoniker": "Services\\RedisCacheService .cs",
+              "ToolTip": "D:\\3.MyPrivate\\BuildCacheRedisProjectMini\\Services\\RedisCacheService .cs",
+              "RelativeToolTip": "Services\\RedisCacheService .cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-27T04:44:46.672Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
