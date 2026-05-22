@@ -1,4 +1,4 @@
-﻿using StackExchange.Redis;
+using StackExchange.Redis;
 
 namespace BuildCacheRedisProjectMini.Services
 {
@@ -13,11 +13,13 @@ namespace BuildCacheRedisProjectMini.Services
         /// <returns>A task containing the</returns>
         Task<T> Get<T>(CacheKey key, Func<Task<T>> acquire);
 
+        Task SetCacheValueAsync<T>(string key, T value, TimeSpan? expiry = null);
 
-        Task SetCacheValueAsync<T>(string key, T value);
+        Task<T?> GetCacheValueAsync<T>(string? key);
 
-        Task<T> GetCacheValueAsync<T>(string? key);
-       
+        Task<bool> ExistsAsync(string key);
+
+        Task<bool> RemoveAsync(string key);
 
         /// <summary>
         /// Gets the key
@@ -42,7 +44,7 @@ namespace BuildCacheRedisProjectMini.Services
         /// </summary>
         /// <param name="key">The key</param>
         /// <returns>A task containing the object</returns>
-        Task<object> Get(CacheKey key);
+        Task<object?> Get(CacheKey key);
 
         /// <summary>
         /// Removes the cache key
@@ -86,13 +88,12 @@ namespace BuildCacheRedisProjectMini.Services
         /// <returns>The cache key</returns>
         CacheKey PrepareKeyForDefaultCache(CacheKey cacheKey, params object[] cacheKeyParameters);
 
-
         void SetFieldsHash(string key, HashEntry hashData, int cacheTime = 0);
 
-
-        T GetFieldHash<T>(string key, string field) where T : class;
+        T? GetFieldHash<T>(string key, string field) where T : class;
 
         Task RemoveHash(string key);
 
+        Task<List<string>> GetAllKeysAsync();
     }
 }

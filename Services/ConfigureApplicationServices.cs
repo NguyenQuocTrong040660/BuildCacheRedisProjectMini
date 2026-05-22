@@ -1,4 +1,4 @@
-﻿using StackExchange.Redis;
+using StackExchange.Redis;
 
 namespace BuildCacheRedisProjectMini.Services
 {
@@ -10,7 +10,7 @@ namespace BuildCacheRedisProjectMini.Services
         {
 
             // Có thể dùng builder.Configuration để lấy các cấu hình
-            var redisConfiguration = builder.Configuration.GetSection("Redis")["ConnectionString"];
+            var redisConfiguration = builder.Configuration.GetSection("Redis")["ConnectionString"] ?? "localhost:6379";
 
 
             ConnectionMultiplexer redisIntanceConnection = ConnectionMultiplexer.Connect(new ConfigurationOptions()
@@ -21,9 +21,24 @@ namespace BuildCacheRedisProjectMini.Services
                 }
             });
             services.AddSingleton<IConnectionMultiplexer>(redisIntanceConnection);
-            services.AddSingleton<IDatabase>(redisIntanceConnection.GetDatabase(-1, (object)null));
+            services.AddSingleton<IDatabase>(redisIntanceConnection.GetDatabase());
 
-            builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
+            services.AddScoped<IRedisCacheService, RedisCacheService>();
+
+            services.AddHealthChecks()
+                .AddAsyncCheck("Redis", async () =>
+                {
+                    try
+                    {
+                        var database = redisIntanceConnection.GetDatabase();
+                        await database.PingAsync();
+                        return Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy("Redis is healthy.");
+                    }
+                    catch (Exception ex)
+                    {
+                        return Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Unhealthy("Redis connection failed.", ex);
+                    }
+                });
 
         }
     
