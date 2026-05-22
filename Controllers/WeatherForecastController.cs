@@ -1,4 +1,4 @@
-﻿using BuildCacheRedisProjectMini.Services;
+using BuildCacheRedisProjectMini.Services;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
 
@@ -53,13 +53,14 @@ namespace BuildCacheRedisProjectMini.Controllers
                 {
                     return BadRequest("Invalid cache item.");
                 }
-                await _redisCacheService.SetCacheValueAsync(cacheItem.Key, cacheItem);
+                var expirationMinutes = cacheItem.ExpirationMinutes > 0 ? cacheItem.ExpirationMinutes : 60;
+                await _redisCacheService.SetCacheValueAsync(cacheItem.Key, cacheItem, TimeSpan.FromMinutes(expirationMinutes));
                 // Trả về đối tượng CacheItem (bao gồm thời gian hết hạn)
                 return Ok(new CacheItem
                 {
                     Key = cacheItem.Key,
                     Value = cacheItem.Value,
-                    ExpirationMinutes = cacheItem.ExpirationMinutes > 0 ? cacheItem.ExpirationMinutes : 60
+                    ExpirationMinutes = expirationMinutes
                 });
             }
             catch (Exception ex)
@@ -116,15 +117,15 @@ namespace BuildCacheRedisProjectMini.Controllers
                 return BadRequest("Key is required.");
             }
 
-            var value = await _redisCacheService.GetCacheValueAsync<CacheItem>(key);
+            var exists = await _redisCacheService.ExistsAsync(key);
 
-            return Ok(value);
+            return Ok(new { Key = key, Exists = exists });
         }
 
         /// <summary>
         /// Xóa 1 CacheKey 
         /// </summary>
-        [HttpGet("removeCacheKeyAsyn")]
+        [HttpDelete("removeCacheKey")]
         [ProducesResponseType(StatusCodes.Status200OK)]  // Ghi rõ HTTP 200 khi thành công
         [ProducesResponseType(StatusCodes.Status400BadRequest)]  // Ghi rõ HTTP 400 khi đầu vào không hợp lệ
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -135,11 +136,15 @@ namespace BuildCacheRedisProjectMini.Controllers
                 return BadRequest("Key is required.");
             }
 
-            var value = await _redisCacheService.GetCacheValueAsync<CacheItem>(key);
-
-            return Ok(value);
-
-
+            var removed = await _redisCacheService.RemoveAsync(key);
+            if (removed)
+            {
+                return Ok(new { Message = "Key removed successfully.", Key = key });
+            }
+            else
+            {
+                return NotFound(new { Message = "Key not found.", Key = key });
+            }
         }
 
 
@@ -170,6 +175,29 @@ namespace BuildCacheRedisProjectMini.Controllers
                 return StatusCode(500, new { Message = "An error occurred while setting the cache.", Details = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Lấy tất cả các Cache Key trong database Redis hiện tại
+        /// </summary>
+        [HttpGet("keys")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllKeys()
+        {
+            try
+            {
+                var keys = await _redisCacheService.GetAllKeysAsync();
+                return Ok(keys);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Message = "An error occurred while fetching keys.",
+                    Details = ex.Message
+                });
+            }
+        }
     }
 
   
@@ -179,15 +207,15 @@ namespace BuildCacheRedisProjectMini.Controllers
 
         public class CacheItem
         {
-            public string Key { get; set; }
-            public string Value { get; set; }
+            public string Key { get; set; } = string.Empty;
+            public string Value { get; set; } = string.Empty;
             public int ExpirationMinutes { get; set; }
         }
 
         public class CacheRequest
         {
-            public string Key { get; set; }          // Key của cache
-            public object Data { get; set; }         // Dữ liệu cần lưu
+            public string Key { get; set; } = string.Empty;          // Key của cache
+            public object Data { get; set; } = null!;         // Dữ liệu cần lưu
             public int CacheTime { get; set; } = 60; // Thời gian cache (mặc định 60 phút)
         }
   
